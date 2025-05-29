@@ -15,21 +15,36 @@ ws.onclose = () => {
 };
 
 ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    if (data.type === "chat") {
+        appendChatMessage(data.text, data.is_self);
+    } else if (data.type === "random_number") {
+        appendRandomNumber(data.value);
+    }
+};
+
+function appendChatMessage(text, isSelf) {
     const messages = document.getElementById("messages");
-    const messageData = JSON.parse(event.data);
     const message = document.createElement("div");
 
-    // Определяем стили в зависимости от отправителя
-    if (messageData.is_self) {
-        message.className = "p-2 my-1 bg-blue-500 text-white rounded-md self-end max-w-xs ml-auto";
-    } else {
-        message.className = "p-2 my-1 bg-gray-200 text-black rounded-md self-start max-w-xs";
-    }
+    message.className = isSelf
+        ? "p-2 my-1 bg-blue-500 text-white rounded-md self-end max-w-xs ml-auto"
+        : "p-2 my-1 bg-gray-200 text-black rounded-md self-start max-w-xs";
 
-    message.textContent = messageData.text;
+    message.textContent = text;
     messages.appendChild(message);
-    messages.scrollTop = messages.scrollHeight; // Автопрокрутка вниз
-};
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function appendRandomNumber(number) {
+    const box = document.getElementById("random-numbers");
+    const numberEl = document.createElement("div");
+    numberEl.className = "text-yellow-800";
+    numberEl.textContent = `🎲 ${number}`;
+    box.appendChild(numberEl);
+    box.scrollTop = box.scrollHeight;
+}
 
 function sendMessage() {
     const input = document.getElementById("messageInput");

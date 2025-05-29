@@ -8,6 +8,11 @@
 </head>
 <body class="bg-gray-100 flex flex-col items-center p-4">
 <h1 class="text-2xl font-bold mb-4">Чат на WebSocket - Комната {{ room_id }}</h1>
+<!-- Область случайных чисел -->
+<div id="random-numbers"
+     class="w-full max-w-lg h-32 overflow-y-auto border border-yellow-300 bg-yellow-50 p-4 rounded-lg shadow-md mt-4">
+    <h2 class="font-bold mb-2 text-yellow-700">🎲 Случайные числа:</h2>
+</div>
 
 <!-- Скрытый элемент для хранения данных комнаты -->
 <div id="room-data"
